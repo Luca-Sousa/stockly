@@ -1,8 +1,10 @@
-import { Button } from "@/app/_components/ui/button";
 import { DataTable } from "@/app/_components/ui/data-table";
-import { PlusIcon } from "lucide-react";
 import { productsTableColumns } from "./_components/table-columns";
 import { getProducts } from "@/app/_data-access/products/get-products";
+import AddProductButton from "./_components/add-product-button";
+
+// Essa página será montada uma vez e reutilizada (SSG), podendo ser incrementada de forma regenerativa (ISR)
+export const dynamic = "force-static";
 
 const Productspage = async () => {
   const products = await getProducts();
@@ -17,10 +19,7 @@ const Productspage = async () => {
           <h1 className="text-xl font-semibold">Produtos</h1>
         </div>
 
-        <Button className="gap-2">
-          <PlusIcon size={20} />
-          Novo Produto
-        </Button>
+        <AddProductButton />
       </div>
 
       <DataTable
