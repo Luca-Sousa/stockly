@@ -1,7 +1,7 @@
 import { DataTable } from "@/app/_components/ui/data-table";
 import { productsTableColumns } from "./_components/table-columns";
 import { getProducts } from "@/app/_data-access/products/get-products";
-import AddProductButton from "./_components/add-product-button";
+import AddProductButton from "./_components/create-product-button";
 
 // Essa página será montada uma vez e reutilizada (SSG), podendo ser incrementada de forma regenerativa (ISR)
 export const dynamic = "force-static";
