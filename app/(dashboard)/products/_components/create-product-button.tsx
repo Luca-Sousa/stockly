@@ -24,11 +24,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, PlusIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
-import {
-  createProduct,
-} from "@/app/_actions/product/create-product";
+import { createProduct } from "@/app/_actions/product/create-product";
 import { useState } from "react";
-import { createProductSchema, CreateProductSchema } from "@/app/_actions/product/create-product/schema";
+import {
+  createProductSchema,
+  CreateProductSchema,
+} from "@/app/_actions/product/create-product/schema";
+import { toast } from "sonner";
 
 const CreateProductButton = () => {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
@@ -47,8 +49,10 @@ const CreateProductButton = () => {
     try {
       await createProduct(data);
       setDialogIsOpen(false); // fecha o dialog
+      toast.success("Produto criado com sucesso.");
     } catch (error) {
       console.error(error);
+      toast.error("Ocorreu um erro ao tentar criar o produto.");
     }
   };
 
