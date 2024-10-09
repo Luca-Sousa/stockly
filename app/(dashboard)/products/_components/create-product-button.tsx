@@ -139,10 +139,10 @@ const CreateProductButton = () => {
 
               <Button
                 type="submit"
-                disabled={form.formState.isSubmitSuccessful}
+                disabled={form.formState.isSubmitting}
                 className="gap-1.5"
               >
-                {form.formState.isSubmitSuccessful && (
+                {form.formState.isSubmitting && (
                   <Loader2Icon className="animate-spin" size={16} />
                 )}
                 Salvar
