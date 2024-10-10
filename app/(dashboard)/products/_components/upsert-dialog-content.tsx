@@ -1,10 +1,10 @@
 "use client";
 
-import { createProduct } from "@/app/_actions/product/create-product";
+import { upsertProduct } from "@/app/_actions/product/upsert-product";
 import {
-  CreateProductSchema,
-  createProductSchema,
-} from "@/app/_actions/product/create-product/schema";
+  UpsertProductSchema,
+  upsertProductSchema,
+} from "@/app/_actions/product/upsert-product/schema";
 import { Button } from "@/app/_components/ui/button";
 import {
   DialogClose,
@@ -30,25 +30,32 @@ import { NumericFormat } from "react-number-format";
 import { toast } from "sonner";
 
 interface UpsertProductDialogContentProps {
+  defaultValues?: UpsertProductSchema;
   onSuccess?: () => void;
 }
 
 const UpsertProductDialogContent = ({
+  defaultValues,
   onSuccess,
 }: UpsertProductDialogContentProps) => {
-  const form = useForm<CreateProductSchema>({
+  const form = useForm<UpsertProductSchema>({
     shouldUnregister: true, //reseta os campos para defaultValues;
-    resolver: zodResolver(createProductSchema),
-    defaultValues: {
+    resolver: zodResolver(upsertProductSchema),
+    // ?? => Se o defaultValues foi nulo ou undefined deve usar os valores de default abaixo
+    defaultValues: defaultValues ?? {
       name: "",
       price: 0,
       stock: 1,
     },
   });
 
-  const onSubmit = async (data: CreateProductSchema) => {
+  // Se tiver um defaultValues o isEdting será true se não vai ser false.
+  const isEdting = !!defaultValues;
+
+  const onSubmit = async (data: UpsertProductSchema) => {
     try {
-      await createProduct(data);
+      // Passa tudo que tem no data e passando o id do defaultValues
+      await upsertProduct({ ...data, id: defaultValues?.id });
       onSuccess?.(); // fecha o dialog
       toast.success("Produto criado com sucesso.");
     } catch (error) {
@@ -62,7 +69,7 @@ const UpsertProductDialogContent = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <DialogHeader>
-            <DialogTitle>Criar Produto</DialogTitle>
+            <DialogTitle>{isEdting ? "Editar" : "Criar"} Produto</DialogTitle>
             <DialogDescription>Insira as informações abaixo</DialogDescription>
           </DialogHeader>
 
