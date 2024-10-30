@@ -37,7 +37,7 @@ const ProductTableDropdownMenu = ({
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost">
               <MoreHorizontalIcon size={16} />
             </Button>
           </DropdownMenuTrigger>
