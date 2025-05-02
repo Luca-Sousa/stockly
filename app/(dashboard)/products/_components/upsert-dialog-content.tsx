@@ -65,13 +65,13 @@ const UpsertProductDialogContent = ({
   // Se tiver um defaultValues o isEdting será true se não vai ser false.
   const isEdting = !!defaultValues;
 
+  const onSubmit = async (data: UpsertProductSchema) =>
+    executeUpsertProduct({ ...data, id: defaultValues?.id });
+
   return (
     <DialogContent>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(executeUpsertProduct)}
-          className="space-y-8"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <DialogHeader>
             <DialogTitle>{isEdting ? "Editar" : "Criar"} Produto</DialogTitle>
             <DialogDescription>Insira as informações abaixo</DialogDescription>
