@@ -1,4 +1,4 @@
-import { deleteproject } from "@/app/_actions/product/delete-product";
+import { deleteProject } from "@/app/_actions/product/delete-product";
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/app/_components/ui/alert-dialog";
+import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 
 interface DeleteProductDialogContentProps {
@@ -17,15 +18,16 @@ interface DeleteProductDialogContentProps {
 const DeleteProductDialogContent = ({
   productId,
 }: DeleteProductDialogContentProps) => {
-  const handleContinueClick = async () => {
-    try {
-      await deleteproject({ id: productId });
+  const { execute: executeDeleteProduct } = useAction(deleteProject, {
+    onError: () => {
+      toast.error("Erro ao excluir o produto.");
+    },
+    onSuccess: () => {
       toast.success("Produto excluído com sucesso.");
-    } catch (error) {
-      console.error(error);
-      toast.error("Ocorreu um erro ao excluir o produto.");
-    }
-  };
+    },
+  });
+
+  const handleContinueClick = () => executeDeleteProduct({ id: productId });
 
   return (
     <AlertDialogContent>
