@@ -25,18 +25,20 @@ import {
 import { Input } from "@/app/_components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
+import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { toast } from "sonner";
 
 interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProductSchema;
-  onSuccess?: () => void;
+  setDialogIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const UpsertProductDialogContent = ({
   defaultValues,
-  onSuccess,
+  setDialogIsOpen,
 }: UpsertProductDialogContentProps) => {
   const form = useForm<UpsertProductSchema>({
     shouldUnregister: true, //reseta os campos para defaultValues;
@@ -49,25 +51,27 @@ const UpsertProductDialogContent = ({
     },
   });
 
-  // Se tiver um defaultValues o isEdting será true se não vai ser false.
-  const isEdting = !!defaultValues;
-
-  const onSubmit = async (data: UpsertProductSchema) => {
-    try {
-      // Passa tudo que tem no data e passando o id do defaultValues
-      await upsertProduct({ ...data, id: defaultValues?.id });
-      onSuccess?.(); // fecha o dialog
+  const { execute: executeUpsertProduct } = useAction(upsertProduct, {
+    onSuccess: () => {
       toast.success("Produto criado com sucesso.");
-    } catch (error) {
+      setDialogIsOpen(false);
+    },
+    onError: (error) => {
       console.error(error);
       toast.error("Ocorreu um erro ao tentar criar o produto.");
-    }
-  };
+    },
+  });
+
+  // Se tiver um defaultValues o isEdting será true se não vai ser false.
+  const isEdting = !!defaultValues;
 
   return (
     <DialogContent>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(executeUpsertProduct)}
+          className="space-y-8"
+        >
           <DialogHeader>
             <DialogTitle>{isEdting ? "Editar" : "Criar"} Produto</DialogTitle>
             <DialogDescription>Insira as informações abaixo</DialogDescription>
