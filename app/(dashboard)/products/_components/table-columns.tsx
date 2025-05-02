@@ -1,10 +1,10 @@
 "use client";
 
 import { Badge } from "@/app/_components/ui/badge";
-import { Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { CircleIcon } from "lucide-react";
 import ProductTableDropdownMenu from "./table-dropdown-menu";
+import { ProductDTO } from "@/app/_data-access/products/get-products";
 
 const getStatusLabel = (status: string) => {
   if (status === "IN_STOCK") {
@@ -13,7 +13,7 @@ const getStatusLabel = (status: string) => {
   return "Esgotado";
 };
 
-export const productsTableColumns: ColumnDef<Product>[] = [
+export const productsTableColumns: ColumnDef<ProductDTO>[] = [
   {
     accessorKey: "name",
     header: "Produto",
@@ -21,13 +21,15 @@ export const productsTableColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "price",
     header: "Valor Unitário",
-    cell: ({ row }) => {
-      const product = row.original;
-
+    cell: ({
+      row: {
+        original: { price },
+      },
+    }) => {
       return Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-      }).format(Number(product.price));
+      }).format(Number(price));
     },
   },
   {
@@ -37,10 +39,12 @@ export const productsTableColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: (row) => {
-      const product = row.row.original;
-      // @ts-expect-error - status is a string
-      const label = getStatusLabel(product.status);
+    cell: ({
+      row: {
+        original: { status },
+      },
+    }) => {
+      const label = getStatusLabel(status);
 
       return (
         <Badge
@@ -58,6 +62,10 @@ export const productsTableColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "actions",
     header: "Ações",
-    cell: (row) => <ProductTableDropdownMenu product={row.row.original} />,
+    cell: ({
+      row: {
+        original: { ...product },
+      },
+    }) => <ProductTableDropdownMenu product={product} />,
   },
 ];
