@@ -21,10 +21,7 @@ const CreateSaleButton = (props: CreateSaleButtonProps) => {
         <Button>Nova venda</Button>
       </SheetTrigger>
 
-      <UpsertSheetContent
-        setSheetIsOpen={setSheetIsOpen}
-        {...props}
-      />
+      <UpsertSheetContent setSheetIsOpen={setSheetIsOpen} {...props} />
     </Sheet>
   );
 };
