@@ -35,39 +35,39 @@ const ProductTableDropdownMenu = ({
   return (
     <AlertDialog>
       <Dialog open={editDialogIsOpen} onOpenChange={setEditDialogIsOpen}>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              <MoreHorizontalIcon size={16} />
-            </Button>
-          </DropdownMenuTrigger>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                <MoreHorizontalIcon size={16} />
+              </Button>
+            </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Acões</DropdownMenuLabel>
-            <DropdownMenuItem
-              className="gap-1.5"
-              onClick={() => navigator.clipboard.writeText(product.id)}
-            >
-              <ClipboardCopyIcon size={16} />
-              Copiar ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-
-            <DialogTrigger asChild>
-              <DropdownMenuItem className="gap-1.5">
-                <EditIcon size={16} />
-                Editar
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Acões</DropdownMenuLabel>
+              <DropdownMenuItem
+                className="gap-1.5"
+                onClick={() => navigator.clipboard.writeText(product.id)}
+              >
+                <ClipboardCopyIcon size={16} />
+                Copiar ID
               </DropdownMenuItem>
-            </DialogTrigger>
+              <DropdownMenuSeparator />
 
-            <AlertDialogTrigger asChild>
-              <DropdownMenuItem className="gap-1.5">
-                <TrashIcon size={16} />
-                Deletar
-              </DropdownMenuItem>
-            </AlertDialogTrigger>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DialogTrigger asChild>
+                <DropdownMenuItem className="gap-1.5">
+                  <EditIcon size={16} />
+                  Editar
+                </DropdownMenuItem>
+              </DialogTrigger>
+
+              <AlertDialogTrigger asChild>
+                <DropdownMenuItem className="gap-1.5">
+                  <TrashIcon size={16} />
+                  Deletar
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
         <UpsertProductDialogContent
           defaultValues={{
