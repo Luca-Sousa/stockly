@@ -14,5 +14,5 @@ export const deleteProject = actionClient
       },
     });
 
-    revalidatePath("/products");
+    revalidatePath("/", "layout")
   });
