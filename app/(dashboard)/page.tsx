@@ -18,7 +18,7 @@ import MostSoldProductCard, {
 
 const Home = async () => {
   return (
-    <div className="m-8 flex w-full flex-col space-y-8 rounded-lg">
+    <div className="m-8 flex w-full flex-col space-y-5 rounded-lg">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Visão Geral</HeaderSubtitle>
@@ -26,7 +26,7 @@ const Home = async () => {
         </HeaderLeft>
       </Header>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-4">
         <Suspense fallback={<SummaryCardSkeleton />}>
           <TotalRevenueCard />
         </Suspense>
@@ -36,7 +36,7 @@ const Home = async () => {
         </Suspense>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-4">
         <Suspense fallback={<SummaryCardSkeleton />}>
           <TotdalSalesCard />
         </Suspense>
@@ -50,19 +50,21 @@ const Home = async () => {
         </Suspense>
       </div>
 
-      <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
-        <Suspense
-          fallback={
-            <Skeleton className="bg-white p-6">
-              <div className="space-y-2">
-                <div className="h-5 w-[86.26px] rounded-md bg-gray-200" />
-                <div className="h-4 w-48 rounded-md bg-gray-200" />
-              </div>
-            </Skeleton>
-          }
-        >
-          <TotalLast14DaysRevenueChart />
-        </Suspense>
+      <div className="grid min-h-0 grid-cols-3 gap-4">
+        <div className="col-span-2 min-h-0">
+          <Suspense
+            fallback={
+              <Skeleton className="bg-white p-6">
+                <div className="space-y-2">
+                  <div className="h-5 w-[86.26px] rounded-md bg-gray-200" />
+                  <div className="h-4 w-48 rounded-md bg-gray-200" />
+                </div>
+              </Skeleton>
+            }
+          >
+            <TotalLast14DaysRevenueChart />
+          </Suspense>
+        </div>
 
         <Suspense fallback={<MostSoldProductsSkeleton />}>
           <MostSoldProductCard />
