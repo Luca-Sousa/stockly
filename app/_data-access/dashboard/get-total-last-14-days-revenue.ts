@@ -10,10 +10,7 @@ export interface DayTotalRevenueDTO {
 
 export const getTotalLast14DaysRevenue = async (): Promise<
   DayTotalRevenueDTO[]
-  > => {
-  
-  await new Promise((resolve) => setTimeout(resolve, 6000))
-  
+> => {
   const today = dayjs().endOf("day").toDate();
   const totalLast14DaysRevenue: DayTotalRevenueDTO[] = [];
 
