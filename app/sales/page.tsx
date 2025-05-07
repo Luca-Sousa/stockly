@@ -27,7 +27,7 @@ const SalesPage = async () => {
   }));
 
   return (
-    <div className="m-8 w-full space-y-8 rounded-lg bg-white p-8">
+    <div className="m-8 w-full space-y-8 rounded-lg bg-white p-8 flex flex-col">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Gestão de Vendas</HeaderSubtitle>
@@ -42,7 +42,9 @@ const SalesPage = async () => {
         </HeaderRight>
       </Header>
 
-      <DataTable columns={saleTableColumns} data={tableData} />
+      <div className="overflow-y-auto">
+        <DataTable columns={saleTableColumns} data={tableData} />
+      </div>
     </div>
   );
 };
